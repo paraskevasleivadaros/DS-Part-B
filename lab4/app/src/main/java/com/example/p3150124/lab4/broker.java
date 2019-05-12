@@ -110,10 +110,6 @@ public class broker {
         return new BigInteger(1, mDigest.digest()).toString();
     }
 
-    public static int countLinesNew(String filename) throws IOException {
-        return consumer.countLines(filename);
-    }
-
     public void openServer() throws IOException {
         ServerSocket providerSocket = new ServerSocket(Integer.parseInt(port));
         Socket connection = null;
@@ -122,6 +118,10 @@ public class broker {
             connection = providerSocket.accept();
             new myThread(connection).start();
         }
+    }
+
+    public static int countLinesNew(String filename) throws IOException {
+        return consumer.countLines(filename);
     }
 
     private class myThread extends Thread {
