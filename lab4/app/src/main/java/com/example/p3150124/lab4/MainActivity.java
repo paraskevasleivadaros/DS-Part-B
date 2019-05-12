@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
             try {
                 int time = Integer.parseInt(params[0]) * 1000;
                 Thread.sleep(time);
-                resp = "Slept for " + params[0] + "seconds";
+                resp = "Slept for " + params[0] + " seconds";
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "ProgressDialog", "Wait for " + time.getText().toString() + "seconds");
+            progressDialog = ProgressDialog.show(MainActivity.this, "Running..", "Wait for " + time.getText().toString() + " seconds");
         }
 
         @Override
