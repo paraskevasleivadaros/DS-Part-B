@@ -11,29 +11,29 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="206dp"
+        android:layout_height="200dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/aueb"
         tools:src="@drawable/aueb" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="282dp"
-        android:layout_height="47dp"
-        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
         android:text="@string/ds_2019"
         android:textColor="@android:color/background_light"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="258dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_enter" />
 
     <EditText
         android:id="@+id/inTime"
-        android:layout_width="258dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/sleeping_time"

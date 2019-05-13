@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-            publishProgress("Sleeping...");
+            publishProgress("Sleeping..");
             try {
                 int time = Integer.parseInt(params[0]) * 1000;
                 Thread.sleep(time);

@@ -5,5 +5,5 @@
     <string name="changed_text">Text to be changed</string>
     <string name="app_name">TestAndroid</string>
     <string name="todo">TODO</string>
-    <string name="sleeping_time">Sleeping time</string>
+    <string name="sleeping_time">Enter Bus Number</string>
 </resources>
