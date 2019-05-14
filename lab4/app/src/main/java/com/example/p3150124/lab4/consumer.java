@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class consumer {
 
     private static String IP = "192.168.1.22";
-    private static String path2 = "C:\\Users\\paras\\AndroidStudioProjects\\DS-Part-B\\lab4\\app\\src\\main\\java\\com\\example\\p3150124\\lab4\\busLinesNew.txt";
+    private static String path2 = Paths.get("busLinesNew.txt").toAbsolutePath().toString();
     private static String bus;
     private static String[] busLines;
     private static String[] busLinesCon;
@@ -174,5 +175,4 @@ public class consumer {
             }
         }
     }
-
 }
