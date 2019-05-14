@@ -1,5 +1,8 @@
 package com.example.p3150124.lab4;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -11,6 +14,7 @@ import java.net.Socket;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class consumer {
 
     private static String IP = "192.168.1.22";
