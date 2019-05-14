@@ -29,7 +29,7 @@ public class consumer {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String args) throws IOException {
 
         try {
             FileReader in = new FileReader(path2);
@@ -49,7 +49,7 @@ public class consumer {
         } catch (IOException e) {
             System.out.println("File Read Error");
         }
-        bus = args[0];
+        bus = args;
         for (int i = 0; i < busLinesCon.length; i++) {
             if (bus.compareTo(busLinesCon[i]) == 0) {
                 bus = busLines[i];

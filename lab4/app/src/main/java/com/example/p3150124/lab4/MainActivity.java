@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 public class MainActivity extends Activity {
 
     private TextView finalResult;
@@ -26,7 +28,12 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 AsyncTaskRunner runner = new AsyncTaskRunner();
                 String sleepTime = time.getText().toString();
-                runner.execute(sleepTime);
+                try {
+                    consumer.main(sleepTime);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //runner.execute(sleepTime);
             }
         });
     }
