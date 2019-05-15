@@ -4,9 +4,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -17,7 +15,7 @@ import java.util.Scanner;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class consumer {
 
-    private static String IP = "192.168.1.22";
+    private static String IP = "172.168.2.34";
     private static String path2 = Paths.get("busLinesNew.txt").toAbsolutePath().toString();
     private static String bus;
     private static String[] busLines;
@@ -36,31 +34,31 @@ public class consumer {
 
     public static void main(String args) throws IOException {
 
-        try {
-            FileReader in = new FileReader(path2);
-            BufferedReader br = new BufferedReader(in);
-
-            String line;
-            int i;
-            i = 0;
-            while ((line = br.readLine()) != null) {
-                String[] tokens = line.split(",");
-                busLines[i] = tokens[0];      // reading from first letter till first ','
-                busLinesCon[i] = tokens[1];   // reading from second ',' till third ','
-                i++;
-            }
-            in.close();
-
-        } catch (IOException e) {
-            System.out.println("File Read Error");
-        }
+//        try {
+//            FileReader in = new FileReader(path2);
+//            BufferedReader br = new BufferedReader(in);
+//
+//            String line;
+//            int i;
+//            i = 0;
+//            while ((line = br.readLine()) != null) {
+//                String[] tokens = line.split(",");
+//                busLines[i] = tokens[0];      // reading from first letter till first ','
+//                busLinesCon[i] = tokens[1];   // reading from second ',' till third ','
+//                i++;
+//            }
+//            in.close();
+//
+//        } catch (IOException e) {
+//            System.out.println("File Read Error");
+//        }
         bus = args;
-        for (int i = 0; i < busLinesCon.length; i++) {
-            if (bus.compareTo(busLinesCon[i]) == 0) {
-                bus = busLines[i];
-                break;
-            }
-        }
+//        for (int i = 0; i < busLinesCon.length; i++) {
+//            if (bus.compareTo(busLinesCon[i]) == 0) {
+//                bus = busLines[i];
+//                break;
+//            }
+//        }
         new consumer().startClient();
     }
 
