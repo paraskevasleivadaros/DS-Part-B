@@ -19,27 +19,22 @@ import java.util.Scanner;
 public class MainActivity extends Activity {
 
     private TextView finalResult;
-    private EditText time;
+    private EditText bus;
     private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        time = findViewById(R.id.inTime);
+        bus = findViewById(R.id.inBus);
         button = findViewById(R.id.button);
         finalResult = findViewById(R.id.textView);
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View view) {
                 AsyncTaskRunner runner = new AsyncTaskRunner();
-                String sleepTime = time.getText().toString();
-//                try {
-//                    consumer.main(sleepTime);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                runner.execute(sleepTime);
+                String busNumber = bus.getText().toString();
+                runner.execute(busNumber);
             }
         });
     }
@@ -48,101 +43,79 @@ public class MainActivity extends Activity {
         ProgressDialog progressDialog;
         private String resp;
 
-        private String IP = "172.168.2.34";
-        //private String path2 = Paths.get("busLinesNew.txt").toAbsolutePath().toString();
-        private String bus;
-        private String[] busLines;
-        private String[] busLinesCon;
-        private int size;
+        private String busNumber;
+        private String[] busLines = {"1151", "821", "750", "817", "818", "974", "1113", "816", "804", "1219", "1220", "938", "831", "819", "1180", "868", "824", "825", "1069", "1077"};
+        private String[] busLinesCon = {"021", "022", "024", "025", "026", "027", "032", "035", "036", "036", "036", "040", "046", "049", "051", "054", "057", "060", "1", "10"};
+
+//        private Socket requestSocket;
 
         @Override
         protected String doInBackground(String... params) {
-//            publishProgress("Sleeping..");
-//            try {
-//                int time = Integer.parseInt(params[0]) * 1000;
-//                Thread.sleep(time);
-//                resp = "Slept for " + params[0] + " seconds";
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            publishProgress("Searching...");
 
             Socket requestSocket = null;
+            PrintStream out = null;
+            Scanner in = null;
 
             try {
-                requestSocket = new Socket(IP, 3421);
+                progressDialog.dismiss();
+                requestSocket = new Socket("192.168.1.140", 3421);
+
+                out = new PrintStream(requestSocket.getOutputStream());
+                in = new Scanner(requestSocket.getInputStream());
+
+                out.println(-1);
+                String broker_buses = in.nextLine();
+                String[] tokens = broker_buses.split("], ");
+
+                String broker1_buses = tokens[0];
+                String broker2_buses = tokens[1];
+                String broker3_buses = tokens[2];
+
+                String broker1 = broker1_buses.substring(1, broker1_buses.indexOf("="));
+                broker1_buses = broker1_buses.substring(broker1_buses.indexOf("="));
+
+                String broker2 = broker2_buses.substring(0, broker2_buses.indexOf("="));
+                broker2_buses = broker2_buses.substring(broker2_buses.indexOf("="));
+
+                String broker3 = broker3_buses.substring(0, broker3_buses.indexOf("="));
+                broker3_buses = broker3_buses.substring(broker3_buses.indexOf("="));
+
+                requestSocket.close();
+
+                if (broker1_buses.contains(busNumber)) {
+                    requestSocket = new Socket(broker1.substring(0, broker1.length() - 4), Integer.parseInt(broker1.substring(broker1.length() - 4)));
+                } else if (broker2_buses.contains(busNumber)) {
+                    requestSocket = new Socket(broker2.substring(0, broker2.length() - 4), Integer.parseInt(broker2.substring(broker2.length() - 4)));
+                } else if (broker3_buses.contains(busNumber)) {
+                    requestSocket = new Socket(broker3.substring(0, broker3.length() - 4), Integer.parseInt(broker3.substring(broker3.length() - 4)));
+                }
+
+                out = new PrintStream(requestSocket.getOutputStream());
+                in = new Scanner(requestSocket.getInputStream());
+
+                out.println(1);
+                out.flush();
+
+                out.println(bus);
+                out.flush();
+
+                in.nextLine();
+
+                publishProgress(in.nextLine());
+
+//                do {
+//                    System.out.println(in.nextLine());
+//                } while (in.nextLine().compareTo("stop") != 0);
+
+                int time = Integer.parseInt(params[0]) * 1000;
+                Thread.sleep(time);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            new myThread(requestSocket).start();
             return resp;
-        }
-
-        private class myThread extends Thread {
-            Socket socket;
-
-            public myThread(Socket socket) {
-                this.socket = socket;
-            }
-
-            public void run() {
-                PrintStream out = null;
-                Scanner in = null;
-
-                try {
-                    out = new PrintStream(socket.getOutputStream());
-                    in = new Scanner(socket.getInputStream());
-
-                    String broker_buses = in.nextLine();
-                    String[] tokens = broker_buses.split("], ");
-
-                    String broker1_buses = tokens[0];
-                    String broker2_buses = tokens[1];
-                    String broker3_buses = tokens[2];
-
-                    String broker1 = broker1_buses.substring(1, broker1_buses.indexOf("="));
-                    broker1_buses = broker1_buses.substring(broker1_buses.indexOf("="));
-
-                    String broker2 = broker2_buses.substring(0, broker2_buses.indexOf("="));
-                    broker2_buses = broker2_buses.substring(broker2_buses.indexOf("="));
-
-                    String broker3 = broker3_buses.substring(0, broker3_buses.indexOf("="));
-                    broker3_buses = broker3_buses.substring(broker3_buses.indexOf("="));
-
-                    socket.close();
-
-                    if (broker1_buses.contains(bus)) {
-                        socket = new Socket(broker1.substring(0, broker1.length() - 4), Integer.parseInt(broker1.substring(broker1.length() - 4)));
-                    } else if (broker2_buses.contains(bus)) {
-                        socket = new Socket(broker2.substring(0, broker2.length() - 4), Integer.parseInt(broker2.substring(broker2.length() - 4)));
-                    } else if (broker3_buses.contains(bus)) {
-                        socket = new Socket(broker3.substring(0, broker3.length() - 4), Integer.parseInt(broker3.substring(broker3.length() - 4)));
-                    }
-
-                    out = new PrintStream(socket.getOutputStream());
-                    in = new Scanner(socket.getInputStream());
-
-                    bus = time.getText().toString();
-
-                    out.println(bus);
-
-                    in.nextLine();
-
-                    do {
-                        System.out.println(in.nextLine());
-                    } while (in.nextLine().compareTo("stop") != 0);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    in.close();
-                    out.close();
-                    this.socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
 
         @Override
@@ -153,7 +126,21 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "Running..", "Wait for " + time.getText().toString() + " seconds");
+            busNumber = bus.getText().toString();
+            progressDialog = ProgressDialog.show(MainActivity.this, "Running...", "Searching position for Bus number: " + busNumber);
+            for (int i = 0; i < busLinesCon.length; i++) {
+                if (busNumber.compareTo(busLinesCon[i]) == 0) {
+                    busNumber = busLines[i];
+                    break;
+                }
+            }
+//            requestSocket = null;
+//
+//            try {
+//                requestSocket = new Socket("192.168.1.140", 3421);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
         @Override
