@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
 
             try {
                 progressDialog.dismiss();
-                requestSocket = new Socket("192.168.1.140", 3421);
+                requestSocket = new Socket("192.168.1.22", 3421);
 
                 out = new PrintStream(requestSocket.getOutputStream());
                 in = new Scanner(requestSocket.getInputStream());
@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
 //            requestSocket = null;
 //
 //            try {
-//                requestSocket = new Socket("192.168.1.140", 3421);
+//                requestSocket = new Socket("192.168.1.22", 3421);
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
