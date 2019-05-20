@@ -97,24 +97,21 @@ public class MainActivity extends Activity {
                 out.println(1);
                 out.flush();
 
-                out.println(bus);
+                in.nextLine();
+
+                out.println(busNumber);
                 out.flush();
 
                 in.nextLine();
 
-                publishProgress(in.nextLine());
-
-//                do {
-//                    System.out.println(in.nextLine());
-//                } while (in.nextLine().compareTo("stop") != 0);
-
-                int time = Integer.parseInt(params[0]) * 1000;
-                Thread.sleep(time);
+                do {
+                    publishProgress(in.nextLine());
+                } while (in.nextLine().compareTo("stop") != 0);
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+
+            resp = "No more Data";
             return resp;
         }
 
@@ -137,7 +134,7 @@ public class MainActivity extends Activity {
 //            requestSocket = null;
 //
 //            try {
-//                requestSocket = new Socket("192.168.1.22", 3421);
+//                requestSocket = new Socket("192.168.1.140", 3421);
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }

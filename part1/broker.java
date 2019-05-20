@@ -67,6 +67,7 @@ public class broker {
 			in = new Scanner(connection.getInputStream());
 			
 			String type = in.nextLine();
+//			System.out.println(type);
 			if (Integer.parseInt(type) == -1) new publisherThread(connection).start();
 			if (Integer.parseInt(type) == 0) new busThread(connection).start();
 			if (Integer.parseInt(type) == 1) new consumerThread(connection).start();
@@ -173,7 +174,13 @@ public class broker {
 				
 				String sub_msg;
 				
+				out.println("Searching...");
+				out.flush();
+				
 				sub_msg = in.nextLine();
+				
+//				System.out.println(sub_msg);
+//				System.out.println(socket);
 				
 				consumers.add(socket);
 				consumers_bus.add(sub_msg);
