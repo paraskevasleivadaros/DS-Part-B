@@ -7,6 +7,7 @@ public class publisher {
 
 	public static ArrayList<String> busIDs;
 	public String path = Paths.get("busPositionsNew.txt").toAbsolutePath().toString();
+	public String pathRouteCodes = Paths.get("RouteCodesNew.txt").toAbsolutePath().toString();
 	public static String[] busLines = {"1151", "821", "750", "817", "818", "974", "1113", "816", "804", "1219", "1220", "938", "831", "819", "1180", "868", "824", "825", "1069", "1077"};
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
