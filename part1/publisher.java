@@ -6,8 +6,7 @@ import java.nio.file.Paths;
 public class publisher {
 
 	public static ArrayList<String> busIDs;
-	public String path = Paths.get("busPositionsNew.txt").toAbsolutePath().toString();
-	public String pathRouteCodes = Paths.get("RouteCodesNew.txt").toAbsolutePath().toString();
+	public static String path = Paths.get("busPositionsNew.txt").toAbsolutePath().toString();
 	public static String[] busLines = {"1151", "821", "750", "817", "818", "974", "1113", "816", "804", "1219", "1220", "938", "831", "819", "1180", "868", "824", "825", "1069", "1077"};
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
@@ -21,13 +20,42 @@ public class publisher {
 				busIDs.add(busLines[i]);
 			}
 		}
+		// counting bus routes
+		try{				
+			FileReader in = new FileReader(path);
+			BufferedReader br = new BufferedReader(in);
+            
+            
+			String line;
+			String topic;
+			int [] count_routes= new int[busIDs.size()] ;  
+			int i = 0;
+			
+			String prev_route = "";
+			while ((line = br.readLine()) != null) {
+				
+				String[] t = line.split(",");
+			if (t[0].compareTo(busIDs.get(i)) == 0 ){
+				if(t[1].compareTo(prev_route)!=0 ){
+				 count_routes[i]++;
+			    }
+			}
+			prev_route = t[1];
+			i++;		
+		 }
+	     in.close();
+         } catch (IOException e) {
+	     System.out.println("File Read Error");
+         }
+			
+			
 		new publisher().startPublisher();
 	}
 	
 	public void startPublisher() throws IOException {
 		Socket requestSocket = null;
 		
-		requestSocket = new Socket("192.168.1.22", 3421);
+		requestSocket = new Socket("192.168.1.65", 3421);
 		
 		PrintStream out = null;
 		Scanner in = null;
@@ -87,12 +115,14 @@ public class publisher {
 	private class myThread extends Thread {
 		Socket socket;
 		String bus;
+		
 		PrintStream out;
 		Scanner in;
 		
 		public myThread(Socket socket, String bus, PrintStream out, Scanner in) {
 			this.socket = socket;
 			this.bus = bus;
+			
 			this.out = out;
 			this.in = in;
 		}
@@ -102,15 +132,21 @@ public class publisher {
 			try{				
 				FileReader in2 = new FileReader(path);
 				BufferedReader br = new BufferedReader(in2);
-
+                
 				String line;
 				String topic;
-				    
+				
+				
 				while ((line = br.readLine()) != null) {
 					String[] t = line.split(",");
-					if (t[0].compareTo(bus) == 0) {
+					
+					if (t[0].compareTo(bus) == 0 ) {
+												
+						in.nextLine();
+						
 						topic = bus + " " + t[3]+ " " + t[4];
 //						System.out.println(topic);
+						
 						out.println(topic);
 						out.flush();
 						sleep(500);

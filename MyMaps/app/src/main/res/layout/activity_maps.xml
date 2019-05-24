@@ -54,13 +54,33 @@
         android:drawableLeft="@drawable/ic_action_search"
         android:paddingLeft="19dp" />
 
+    <!--<EditText-->
+    <!--android:id="@+id/inBus"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="56dp"-->
+    <!--android:ems="10"-->
+    <!--android:hint="Enter Bus Number"-->
+    <!--android:importantForAutofill="no"-->
+    <!--android:inputType="numberDecimal"-->
+    <!--android:background="@color/colorPrimaryDark"-->
+    <!--android:textColor="@android:color/background_light"-->
+    <!--android:textColorHint="#FFFFFF" />-->
+
     <!--<Button-->
-    <!--android:id="@+id/hide_button"-->
+    <!--android:id="@+id/button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:text="Search" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/back_button"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="60dp"-->
     <!--android:layout_alignParentBottom="true"-->
     <!--android:layout_centerHorizontal="true"-->
     <!--android:layout_marginBottom="48dp"-->
-    <!--android:text="Hide" />-->
+    <!--android:text="Back" />-->
 
 </RelativeLayout>
