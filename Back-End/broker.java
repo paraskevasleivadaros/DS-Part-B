@@ -10,7 +10,6 @@ public class broker {
 	
 	public static Hashtable <String, ArrayList<String>> br_bus;
 	public static Hashtable <String, String> match;
-	public static String IP = "192.168.1.2";
 	public static String path = Paths.get("brokers.txt").toAbsolutePath().toString();
 	public static String port;
 	public static String[] busLines = {"1151", "821", "750", "817", "818", "974", "1113", "816", "804", "1219", "1220", "938", "831", "819", "1180", "868", "824", "825", "1069", "1077"};
